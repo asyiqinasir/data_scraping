@@ -57,7 +57,12 @@ def extract_data_from_pdf(pdf_path, mp):
                     elif len(words) >= 2 and words[0].isdigit() and len(words[0]) == 6:
                         current_kod_aktiviti = words[0]
                         activity_part = " ".join(words[1:])
-                        current_aktiviti = activity_part.split(".")[0].strip()
+                        potential_aktiviti = activity_part.split(".")[0].strip()
+                        if potential_aktiviti.isdigit():
+                            continue
+                        # Only take characters before the first digit
+                        current_aktiviti = ''.join(c for c in potential_aktiviti if not c.isdigit()).strip()
+                        current_aktiviti = current_aktiviti[:50]  # Ensure max 50 characters
 
                     elif len(words) > 4 and words[0] in ["10000", "20000", "30000", "40000", "50000"]:
                         objek_am = words[0]
@@ -106,7 +111,7 @@ def extract_data_from_pdf(pdf_path, mp):
 
 def save_to_excel(data, output_path):
     try:
-        if not data:  #ensure there's data to save
+        if not data:  # ensure there's data to save
             logging.warning(f"No data to save for {output_path}")
             return
 
