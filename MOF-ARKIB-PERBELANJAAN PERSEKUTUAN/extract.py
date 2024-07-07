@@ -49,7 +49,10 @@ def extract_data_from_pdf(pdf_path, mp):
                     if line.isupper() and len(words) >= 2 and words[0].isdigit() and len(words[0]) == 6:
                         current_kod_program = words[0]
                         program_part = " ".join(words[1:])
-                        current_program = program_part.split(".")[0].strip()
+                        potential_program = program_part.split(".")[0].strip()
+                        # Only take characters before the first digit
+                        current_program = ''.join(c for c in potential_program if not c.isdigit()).strip()
+                        current_program = current_program[:50]  # Ensure max 50 characters
                         current_kod_aktiviti = ''
                         current_aktiviti = ''
 
