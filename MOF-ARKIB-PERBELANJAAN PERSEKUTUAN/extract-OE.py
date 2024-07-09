@@ -126,13 +126,8 @@ def save_to_excel(data, output_path):
         raise
 
 def main():
-<<<<<<< HEAD
     pdf_dir = 'pdf-to-ocr/2015/3-OCR-pdf' 
     output_dir = 'pdf-to-ocr/2015/output' # your output directory
-=======
-    pdf_dir = 'input' # your input directory
-    output_dir = 'output' # your output directory
->>>>>>> 18936af74c53a09065d0170cde48b72f8039eb72
 
     os.makedirs(output_dir, exist_ok=True)
 
