@@ -38,8 +38,14 @@ def extract_data_from_pdf(pdf_path, mp):
                         logging.debug(f"Processing line in pembangunan section: {line}")
                         if len(words) >= 7 and words[0].isdigit() and len(words[0]) == 5:
                             butiran = words[0]
-                            tajuk = " ".join(words[1:-5])
-                            jumlah_anggaran_harga_projek = words[-6]
+                            # Extract title words before the first digit (dont extract digit in 'Tajuk')
+                            tajuk_words = []
+                            for word in words[1:]:
+                                if word.replace(',', '').isdigit():
+                                    break
+                                tajuk_words.append(word)
+                            tajuk = ' '.join(tajuk_words)
+                            jumlah_anggaran_harga_projek = words[-5]
                             cara_langsung = words[-2]
                             pinjaman = words[-1]
                             data.append({
@@ -72,8 +78,8 @@ def save_to_excel(data, output_path):
         raise
 
 def main():
-    pdf_dir = 'pdf-to-ocr/2013/3-OCR-pdf'  # update with your directory
-    output_dir = 'pdf-to-ocr/2013/output/DE'  # your output directory
+    pdf_dir = 'pdf-to-ocr/2015/3-OCR-pdf'  # update with your directory
+    output_dir = 'pdf-to-ocr/2015/output/DE'  # your output directory
 
     os.makedirs(output_dir, exist_ok=True)
 
